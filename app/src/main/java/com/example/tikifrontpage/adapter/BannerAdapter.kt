@@ -24,7 +24,6 @@ class BannerAdapter(private var listBanner: Banner) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BannerViewHolder {
-        Log.d(TAG, "onCreateViewHolder: Called")
         return BannerViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.item_banner, parent, false)
         )

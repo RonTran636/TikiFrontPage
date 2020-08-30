@@ -1,6 +1,7 @@
 package com.example.tikifrontpage.viewmodel
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.tikifrontpage.api.MyService
@@ -19,9 +20,18 @@ class MainActivityViewModel : ViewModel() {
     private val myService = MyService()
     private val disposable = CompositeDisposable()
 
-    val bannerInfo = MutableLiveData<Banner>()
-    val quickLinkInfo = MutableLiveData<QuickLink>()
-    val flashDealInfo = MutableLiveData<FlashDeal>()
+    private val _bannerInfo = MutableLiveData<Banner>()
+    val bannerInfo: LiveData<Banner>
+        get() = _bannerInfo
+
+    private val _quickLinkInfo = MutableLiveData<QuickLink>()
+    val quickLinkInfo: LiveData<QuickLink>
+        get() = _quickLinkInfo
+
+    private val _flashDealInfo = MutableLiveData<FlashDeal>()
+    val flashDealInfo: LiveData<FlashDeal>
+        get() = _flashDealInfo
+
     val loading = MutableLiveData<Boolean>()
 
     fun refresh() {
@@ -37,7 +47,7 @@ class MainActivityViewModel : ViewModel() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableSingleObserver<Banner>() {
                     override fun onSuccess(value: Banner?) {
-                        bannerInfo.value = value
+                        _bannerInfo.value = value
                         loading.value = false
                     }
                     override fun onError(e: Throwable?) {
@@ -52,17 +62,13 @@ class MainActivityViewModel : ViewModel() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableSingleObserver<QuickLink>() {
                     override fun onSuccess(t: QuickLink?) {
-                        quickLinkInfo.value = t
-                        Log.d(TAG, "onSuccess: Value is $t")
+                        _quickLinkInfo.value = t
                     }
-
                     override fun onError(e: Throwable?) {
-                        Log.e(TAG, "onError on Quick Link: error is $e")
                         loading.value = false
                     }
                 })
         )
-        Log.d(TAG, "fetchData: end of fetching quicklink data")
 
         disposable.add(
             myService.getFlashDeal()
@@ -70,10 +76,9 @@ class MainActivityViewModel : ViewModel() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableSingleObserver<FlashDeal>() {
                     override fun onSuccess(t: FlashDeal?) {
-                        flashDealInfo.value = t
+                        _flashDealInfo.value = t
                         Log.d(TAG, "onSuccess: Value is $t")
                     }
-
                     override fun onError(e: Throwable?) {
                         Log.e(TAG, "onError on Flash Deal: error is $e")
                         loading.value = false

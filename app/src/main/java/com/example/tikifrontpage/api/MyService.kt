@@ -1,25 +1,18 @@
 package com.example.tikifrontpage.api
 
-
 import com.example.tikifrontpage.data.Banner
 import com.example.tikifrontpage.data.FlashDeal
 import com.example.tikifrontpage.data.QuickLink
+import com.example.tikifrontpage.di.DaggerAPIComponent
 import io.reactivex.Single
-import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Inject
 
 class MyService {
-    private val BASE_URL = "https://api.tiki.vn/"
-    private val api: BannerAPI
 
+    @Inject
+    lateinit var  api: MyAPI
     init {
-        api = Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .build()
-            .create(BannerAPI::class.java)
+        DaggerAPIComponent.create().inject(this)
     }
 
     fun getBanner(): Single<Banner> {

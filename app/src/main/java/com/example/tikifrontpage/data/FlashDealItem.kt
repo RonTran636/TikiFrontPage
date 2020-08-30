@@ -1,12 +1,10 @@
 package com.example.tikifrontpage.data
 
 data class FlashDeal(
-    val data: List<Data>,
-    val tabs: List<Tab>,
-    val version: String
+    val data: ArrayList<FlashDealItem>
 )
 
-data class Data(
+data class FlashDealItem(
     val discount_percent: Int,
     val from_date: String,
     val product: Product,

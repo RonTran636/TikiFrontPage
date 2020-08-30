@@ -17,8 +17,7 @@
                 android:layout_height="250dp"
                 android:background="@drawable/home_background"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-        >
+                app:layout_constraintTop_toTopOf="parent">
 
             <androidx.appcompat.widget.SearchView
                     android:id="@+id/searchView"
@@ -100,14 +99,22 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/bannerViewpager"/>
-
+        <Space
+                android:id="@+id/spacer"
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:background="#000000"
+                app:layout_constraintTop_toBottomOf="@id/quickLinkView"
+                app:layout_constraintBottom_toTopOf="@id/flashDealView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
         <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/flashDealView"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_marginStart="16dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/quickLinkView"/>
+                app:layout_constraintTop_toBottomOf="@id/spacer"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

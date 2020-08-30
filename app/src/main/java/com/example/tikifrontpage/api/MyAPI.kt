@@ -6,7 +6,7 @@ import com.example.tikifrontpage.data.QuickLink
 import io.reactivex.Single
 import retrofit2.http.GET
 
-interface BannerAPI {
+interface MyAPI {
 
     @GET("v2/home/banners/v2")
     fun getBanner(): Single<Banner>
